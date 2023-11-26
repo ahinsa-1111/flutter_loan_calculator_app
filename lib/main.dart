@@ -11,6 +11,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController _controller1 = TextEditingController();
+  TextEditingController _controller2 = TextEditingController();
+  TextEditingController _controller3 = TextEditingController();
+  String? selected;
+  double? totalIntrest;
+  double? monthlyIntrest;
+  double? monthlyInstallment;
+
+  void loancalculate() {
+    final amount = int.parse(_controller1.text) - int.parse(_controller2.text);
+    final tinterest =
+        amount * (double.parse(_controller3.text) / 100) * int.parse(selected!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,9 +90,18 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                inputForm(title: "Car Price", hintText: "e.g 900000"),
-                inputForm(title: "Down Payment", hintText: "e.g 9000"),
-                inputForm(title: "Intrest Rate", hintText: "e.g 3.5"),
+                inputForm(
+                    title: "Car Price",
+                    hintText: "e.g 900000",
+                    controller: _controller1),
+                inputForm(
+                    title: "Down Payment",
+                    hintText: "e.g 9000",
+                    controller: _controller2),
+                inputForm(
+                    title: "Intrest Rate",
+                    hintText: "e.g 3.5",
+                    controller: _controller3),
                 Text(
                   "Loan Period",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -109,17 +132,20 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 30, //bottom sized box alignment
                 ),
-                Container(
-                  height: 60,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Colors.yellow,
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Center(
-                    child: Text(
-                      "Calculate",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 60,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.yellow,
+                        borderRadius: BorderRadius.circular(25)),
+                    child: Center(
+                      child: Text(
+                        "Calculate",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 )
@@ -132,21 +158,32 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget loanPeriod(String? title) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 2, 20, 0),
-      child: Container(
-        height: 40, //yellow box height and width
-        width: 40,
-        decoration: BoxDecoration(
-          color: Colors.yellow,
-          borderRadius: BorderRadius.circular(9),
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selected = title;
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 2, 20, 0),
+        child: Container(
+          height: 40, //yellow box height and width
+          width: 40,
+          decoration: BoxDecoration(
+            border: title == selected
+                ? Border.all(color: Colors.red, width: 2)
+                : null,
+            color: Colors.yellow,
+            borderRadius: BorderRadius.circular(9),
+          ),
+          child: Center(child: Text(title!)),
         ),
-        child: Center(child: Text(title!)),
       ),
     );
   }
 
-  Widget inputForm({String? title, String? hintText}) {
+  Widget inputForm(
+      {String? title, TextEditingController? controller, String? hintText}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -164,6 +201,7 @@ class _HomePageState extends State<HomePage> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: TextField(
+            controller: controller,
             decoration: InputDecoration(
                 border: OutlineInputBorder(borderSide: BorderSide.none),
                 hintText: hintText),

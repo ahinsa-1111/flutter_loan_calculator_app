@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MaterialApp(
@@ -23,6 +25,13 @@ class _HomePageState extends State<HomePage> {
     final amount = int.parse(_controller1.text) - int.parse(_controller2.text);
     final tinterest =
         amount * (double.parse(_controller3.text) / 100) * int.parse(selected!);
+    final minterest = tinterest / (int.parse(selected!) * 12);
+    final minstall = (amount + tinterest) / (int.parse(selected!) * 12);
+    setState(() {
+      totalIntrest = tinterest;
+      monthlyIntrest = minterest;
+      monthlyInstallment = minstall;
+    });
   }
 
   @override
@@ -133,7 +142,48 @@ class _HomePageState extends State<HomePage> {
                   height: 30, //bottom sized box alignment
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    loancalculate();
+                    Future.delayed(Duration.zero);
+                    showModalBottomSheet(
+                        isDismissible: false,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                            height: 400,
+                            width: double.infinity,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 30, 0, 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Result",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Result(
+                                      title: "Total Interest",
+                                      amount: totalIntrest),
+                                  Result(
+                                      title: "Monthly Interest",
+                                      amount: monthlyIntrest),
+                                  Result(
+                                      title: "Monthly Installment",
+                                      amount: monthlyInstallment)
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                  },
                   child: Container(
                     height: 60,
                     width: double.infinity,
@@ -153,6 +203,22 @@ class _HomePageState extends State<HomePage> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget Result({String? title, double? amount}) {
+    return ListTile(
+      title: Text(
+        title!,
+        style: TextStyle(fontSize: 20),
+      ),
+      trailing: Padding(
+        padding: const EdgeInsets.only(right: 20.0),
+        child: Text(
+          "RS." + amount!.toStringAsFixed(2),
+          style: TextStyle(fontSize: 19),
+        ),
       ),
     );
   }

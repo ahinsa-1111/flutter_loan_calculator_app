@@ -74,16 +74,57 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.fromLTRB(30, 10, 40, 0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 inputForm(title: "Car Price", hintText: "e.g 900000"),
                 inputForm(title: "Down Payment", hintText: "e.g 9000"),
                 inputForm(title: "Intrest Rate", hintText: "e.g 3.5"),
-                Text("Loan Period",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))
+                Text(
+                  "Loan Period",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    loanPeriod("1"),
+                    loanPeriod("2"),
+                    loanPeriod("3"),
+                    loanPeriod("4"),
+                    loanPeriod("5"),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    loanPeriod("6"),
+                    loanPeriod("7"),
+                    loanPeriod("8"),
+                    loanPeriod("9"),
+                  ],
+                ),
               ],
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget loanPeriod(String? title) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 2, 20, 0),
+      child: Container(
+        height: 40, //yellow box height and width
+        width: 40,
+        decoration: BoxDecoration(
+          color: Colors.yellow,
+          borderRadius: BorderRadius.circular(9),
+        ),
+        child: Center(child: Text(title!)),
       ),
     );
   }

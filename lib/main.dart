@@ -106,6 +106,23 @@ class _HomePageState extends State<HomePage> {
                     loanPeriod("9"),
                   ],
                 ),
+                SizedBox(
+                  height: 30, //bottom sized box alignment
+                ),
+                Container(
+                  height: 60,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.yellow,
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Center(
+                    child: Text(
+                      "Calculate",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                )
               ],
             ),
           )

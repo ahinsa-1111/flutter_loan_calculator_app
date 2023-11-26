@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 void main() => runApp(MaterialApp(
@@ -43,7 +41,7 @@ class _HomePageState extends State<HomePage> {
           color: Colors.black,
         ),
         toolbarHeight: 20,
-        backgroundColor: Colors.yellow,
+        backgroundColor: Color.fromARGB(255, 98, 255, 83),
         elevation: 0,
         actions: [
           Padding(
@@ -66,7 +64,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             height: 80, //top yellow border
             decoration: BoxDecoration(
-              color: Colors.yellow,
+              color: const Color.fromARGB(255, 98, 255, 83),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
@@ -177,7 +175,36 @@ class _HomePageState extends State<HomePage> {
                                       amount: monthlyIntrest),
                                   Result(
                                       title: "Monthly Installment",
-                                      amount: monthlyInstallment)
+                                      amount: monthlyInstallment),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 20.0),
+                                      child: Container(
+                                        height: 60,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 98, 255, 83),
+                                            borderRadius:
+                                                BorderRadius.circular(25)),
+                                        child: Center(
+                                          child: Text(
+                                            "Recalculate",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -188,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                     height: 60,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        color: Colors.yellow,
+                        color: const Color.fromARGB(255, 98, 255, 83),
                         borderRadius: BorderRadius.circular(25)),
                     child: Center(
                       child: Text(
@@ -239,7 +266,7 @@ class _HomePageState extends State<HomePage> {
             border: title == selected
                 ? Border.all(color: Colors.red, width: 2)
                 : null,
-            color: Colors.yellow,
+            color: Color.fromARGB(255, 98, 255, 83),
             borderRadius: BorderRadius.circular(9),
           ),
           child: Center(child: Text(title!)),
